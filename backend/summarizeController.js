@@ -4,7 +4,7 @@ import generateSummary from './summarizeService.js';
 const summarizeText = async (req, res) => {
     const { youtubeUrl, context } = req.body;
 
-    if (!youtubeUrl || !context ) {
+    if (!youtubeUrl) {
         return res.status(400).send('Bad Request');
     }
 
@@ -15,7 +15,7 @@ const summarizeText = async (req, res) => {
     }
 
     const promptBase = `Summarize the following text:`;
-    const contextString = `Given the following context, "${context}"`
+    const contextString = context && `Given the following context, "${context}"`
     const prompt = contextString ? `${contextString}\n${promptBase}\n${transcribedText}` : `${promptBase}\n\n${transcribedText}`;
 
     try {
