@@ -1,15 +1,22 @@
+import { executePython } from './executePython.js';
 import generateSummary from './summarizeService.js';
 
 const summarizeText = async (req, res) => {
-    const { transcribedText, keywords } = req.body;
+    const { youtubeUrl, context } = req.body;
+
+    if (!youtubeUrl || !context ) {
+        return res.status(400).send('Bad Request');
+    }
+
+    const transcribedText = await executePython('transcribe.py', youtubeUrl);
 
     if (!transcribedText || transcribedText.trim() === '') {
         return res.status(400).send('transcribedText is required and cannot be empty.');
     }
 
     const promptBase = `Summarize the following text:`;
-    const keywordString = keywords && keywords.length ? ` focusing on these keywords: ${keywords.join(", ")}` : '';
-    const prompt = keywordString ? `${promptBase}${keywordString}\n\n${transcribedText}` : `${promptBase}\n\n${transcribedText}`;
+    const contextString = `Given the following context, "${context}"`
+    const prompt = contextString ? `${contextString}\n${promptBase}\n${transcribedText}` : `${promptBase}\n\n${transcribedText}`;
 
     try {
         const chatGPTResponse = await generateSummary(prompt);
