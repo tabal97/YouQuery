@@ -1,3 +1,4 @@
+import sys
 from pytube import YouTube
 import speech_recognition as sr
 import os
@@ -15,10 +16,9 @@ def download_mp3(video_url, output_path):
     yt.register_on_progress_callback(progress)
     yt.title = "audio"
     audio_stream = yt.streams.filter(only_audio=True).first()
-    print(audio_stream)
     audio_stream.download(output_path)
 
-video_url = "https://youtu.be/1aA1WGON49E" # TODO: Replace with input from API
+video_url = sys.argv[1]
 output_path = ""
 download_mp3(video_url, output_path)
 
@@ -35,8 +35,10 @@ AUDIO_FILE = "transcript.wav"
 # use the audio file as the audio source                                        
 r = sr.Recognizer()
 with sr.AudioFile(AUDIO_FILE) as source:
-    audio = r.record(source, duration=60)  # reads the first 60 seconds                  
+    audio = r.record(source, duration=120)  # reads the first 60 seconds                  
     transcript = r.recognize_google(audio)
-    print("Transcription: " + transcript)
-    f = open('transcript.txt', 'a')
-    f.write(transcript)
+    print(transcript)
+    os.remove('audio.mp4')
+    os.remove('audio.mp3')
+    os.remove('transcript.wav')
+    sys.stdout.flush()
