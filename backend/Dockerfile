@@ -1,10 +1,13 @@
-FROM node:16
-
-RUN apt-get update || : && apt-get install python -y
+FROM nikolaik/python-nodejs:latest
 
 WORKDIR /app
 COPY . /app
+
+RUN apt-get -y update && apt-get -y upgrade && apt-get install -y --no-install-recommends ffmpeg
+
 RUN npm install
+RUN pip install pytube ffmpeg-python SpeechRecognition pydub
 
 EXPOSE 3000
+
 CMD ["npm", "start"]
