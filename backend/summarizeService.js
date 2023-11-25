@@ -10,7 +10,7 @@ const generateSummary = async (prompt) =>  {
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [{role: 'user', content: prompt}],
-            max_tokens: 200,
+            max_tokens: process.env.MAX_TOKENS,
             temperature: Number(process.env.TEMPERATURE || 0.4)
         });
 
