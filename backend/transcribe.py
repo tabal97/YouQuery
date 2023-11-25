@@ -35,7 +35,7 @@ AUDIO_FILE = "transcript.wav"
 # use the audio file as the audio source                                        
 r = sr.Recognizer()
 with sr.AudioFile(AUDIO_FILE) as source:
-    audio = r.record(source, duration=60)  # reads the first 60 seconds                  
+    audio = r.record(source, duration=120)  # reads the first 60 seconds                  
     transcript = r.recognize_google(audio)
     print(transcript)
     os.remove('audio.mp4')
