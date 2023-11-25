@@ -14,7 +14,6 @@ const generateSummary = async (prompt) =>  {
             temperature: Number(process.env.TEMPERATURE || 0.4)
         });
 
-        console.log('Response ABDAL', response)
         return response.choices[0].message.content;
     } catch (error) {
         console.error('Error in ChatGPT Service:', error);
