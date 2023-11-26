@@ -6,6 +6,9 @@ Wish there was a way you could quickly catch up on your favourite show?
 Look no further, introducing <b>YouQuery</b> the web app for intelligently summarising YouTube videos
 <br>
 
+## Disclaimer
+YouQuery integrates with OpenAI's API on the paid tier, so please be mindful of how many requests you're making.
+
 ## Backend
 
 ### Prerequesites
@@ -27,6 +30,20 @@ Server running on port X
 ```
 Indicating that the server is now listening out for requests
 
+
+## Frontend
+
+cd into the `frontend` dir and install dependencies
+
+```
+npm ci
+```
+To build your react app on PORT=3001
+```
+npm run start
+```
+
+If everything is running correctly, navigating to `localhost:3001` on your browser should display the app
 
 ## The Team
 
