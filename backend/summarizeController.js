@@ -14,7 +14,7 @@ const summarizeText = async (req, res) => {
         return res.status(400).send('transcribedText is required and cannot be empty.');
     }
 
-    const promptBase = `Summarize the following text:`;
+    const promptBase = `Summarize the following transcript:`;
     const contextString = context && `Given the following context, "${context}"`
     const prompt = contextString ? `${contextString}\n${promptBase}\n${transcribedText}` : `${promptBase}\n\n${transcribedText}`;
 
