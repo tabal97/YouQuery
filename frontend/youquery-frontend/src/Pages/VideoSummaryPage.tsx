@@ -1,21 +1,55 @@
 import { ExpandMore, ExpandMoreOutlined } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, CircularProgress, Container, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios'
 
-
+interface ISummaryDataProp  {
+    youtubeUrl: string
+}
+const mockResponse = {
+    status: 200,
+    data: {
+        summary: `Key points from the video \n
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique dolorem, inventore ipsam recusandae deserunt sunt a labore placeat cum consectetur, praesentium nam sit qui aut vitae ab at? Ratione, facilis!`
+    } 
+}
 export function VideoSummaryPage(){
 
     const [videoLink, setVideoLink] = useState('')
     const [summaryExpanded, setSummaryExpanded] = useState(true)
+    const [videoSummaryText, setVideoSummaryText] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [data, setData] = useState({})
     // const validateForm
+    useEffect(() => {
+        console.log(videoSummaryText, '< videoSummaryText')
+    }, [videoSummaryText])
     
+    const postSummary = async (summaryData: ISummaryDataProp) =>{
+        try {
+            //---uncomment later
+            // const response = await axios.post(`http://localhost:3003/summarize`, summaryData)
+            if (mockResponse.status === 200){
+                const summary = mockResponse.data.summary
+                setVideoSummaryText(summary)
+                console.log(videoSummaryText, '< videoSummaryText')
+            }
+            // console.log(response.data) /
+        }catch(error){
+            console.error(`Error posting data: ${Error}`)
+        }
+    }
     const handleSummarize = () => {
+let data = {
+    youtubeUrl: "videoLink"
+}
         //validateForm
         setIsLoading(true)
+        postSummary(data)
         setTimeout(()=>{
-
+            
             setIsLoading(false)
+        
         }, 4000)
     }
     const handleAccordionChange=()=>{
@@ -57,7 +91,7 @@ export function VideoSummaryPage(){
 
             {isLoading ? <Grid justifyContent="center" container marginY={2}><CircularProgress/></Grid> : <Box marginY={2}>
         
-        <Accordion  expanded={summaryExpanded} onChange={handleAccordionChange}>
+        <Accordion   expanded={summaryExpanded} onChange={handleAccordionChange}>
         <AccordionSummary
           expandIcon={<ExpandMore style={{color: '#FFFFFF'}} />}
           aria-controls="panel1a-content"
@@ -68,8 +102,7 @@ export function VideoSummaryPage(){
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias, dignissimos quas quis similique perferendis obcaecati labore fuga delectus iure, sed quidem quia nesciunt, debitis ad consequuntur nihil reiciendis hic aspernatur. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus nostrum sapiente iure, corporis suscipit fugiat qui molestias dicta laudantium harum, dolorem beatae autem blanditiis doloremque optio? Nulla eum qui expedita.
+            {!videoSummaryText && isLoading ? "Loading summary..." : videoSummaryText}
           </Typography>
         </AccordionDetails>
       </Accordion>
