@@ -16,17 +16,12 @@ export function VideoSummaryPage(){
     const [videoSummaryText, setVideoSummaryText] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        console.log(videoSummaryText, '< videoSummaryText')
-    }, [videoSummaryText])
-    
     const postSummary = async (summaryData: ISummaryDataProp) =>{
         try {
             const response = await axios.post(`http://localhost:3000/summarize`, summaryData)
 
-            setVideoSummaryText(response.data.summary)
-            console.log(response.data.summary, '< response')
-        }catch(error){
+            setVideoSummaryText(response.data.summary);
+        } catch(error){
             console.error(`Error posting data: ${Error}`)
         }
     }
