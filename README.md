@@ -13,6 +13,7 @@ YouQuery integrates with OpenAI's API on the paid tier, so please be mindful of 
 
 ### Prerequesites
 - [Docker CLI](https://docs.docker.com/engine/install/)
+- <b>OpenAI API key</b>, this is required to run the backend logic. If you are demoing this project as part of the NC Hackathon 2023 then please reach out to one of the team members and they will be happy to assist.
 
 cd into the `backend` dir and install dependencies
 
