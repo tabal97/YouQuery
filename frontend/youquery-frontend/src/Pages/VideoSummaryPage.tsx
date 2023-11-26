@@ -68,7 +68,6 @@ let data = {
           fullWidth
           id="outlined-error-helper-text"
           label="Insert your video link here"
-          helperText="Some helper text"
         />
             </Box>
             <Box marginY={2} >

@@ -26,7 +26,9 @@ os.system(command2mp3)
 # use the audio file as the audio source                                        
 r = sr.Recognizer()
 with sr.AudioFile("transcript.wav") as source:
-    audio = r.record(source, 30)  # reads the first 180 seconds                  
+    # The second arg is 30 second to stick with the free tier
+    # for transcribing longer videos a paid tier is required
+    audio = r.record(source, 30)  # reads the first 30 seconds
     transcript = r.recognize_google(audio)
     print(transcript)
     os.remove('transcript.webm')
