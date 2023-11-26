@@ -6,6 +6,9 @@ Wish there was a way you could quickly catch up on your favourite show?
 Look no further, introducing <b>YouQuery</b> the web app for intelligently summarising YouTube videos
 <br>
 
+![Screenshot 2023-11-26 at 16 31 21](https://github.com/tabal97/YouQuery/assets/53010396/1107d620-2a8d-47c5-b5fd-62e13c059d5a)
+<br>
+
 ## Disclaimer
 YouQuery integrates with OpenAI's API on the paid tier, so please be mindful of how many requests you're making.
 
