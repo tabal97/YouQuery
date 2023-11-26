@@ -2,6 +2,7 @@ import { executePython } from './executePython.js';
 import generateSummary from './summarizeService.js';
 
 const summarizeText = async (req, res) => {
+    console.log(req.body, '< bend req.body')
     const { youtubeUrl, context } = req.body;
 
     if (!youtubeUrl) {
@@ -9,7 +10,7 @@ const summarizeText = async (req, res) => {
     }
 
     const transcribedText = await executePython('transcribe.py', youtubeUrl);
-
+    // console.log(transcribedText, '< transcribedText')
     if (!transcribedText || transcribedText.trim() === '') {
         return res.status(400).send('transcribedText is required and cannot be empty.');
     }

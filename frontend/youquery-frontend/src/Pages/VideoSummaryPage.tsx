@@ -5,6 +5,7 @@ import axios from 'axios'
 
 interface ISummaryDataProp  {
     youtubeUrl: string
+    context?: string
 }
 const mockResponse = {
     status: 200,
@@ -16,6 +17,7 @@ const mockResponse = {
 export function VideoSummaryPage(){
 
     const [videoLink, setVideoLink] = useState('')
+    const [context, setContext] = useState('')
     const [summaryExpanded, setSummaryExpanded] = useState(true)
     const [videoSummaryText, setVideoSummaryText] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -28,29 +30,28 @@ export function VideoSummaryPage(){
     const postSummary = async (summaryData: ISummaryDataProp) =>{
         try {
             //---uncomment later
-            // const response = await axios.post(`http://localhost:3003/summarize`, summaryData)
-            if (mockResponse.status === 200){
-                const summary = mockResponse.data.summary
-                setVideoSummaryText(summary)
-                console.log(videoSummaryText, '< videoSummaryText')
-            }
-            // console.log(response.data) /
+            const response = await axios.post(`http://localhost:3000/summarize`, summaryData)
+            // if (mockResponse.status === 200){
+            //     const summary = mockResponse.data.summary
+            //     setVideoSummaryText(summary)
+            //     console.log(videoSummaryText, '< videoSummaryText')
+            // }
+
+            setVideoSummaryText(response.data.summary)
+            console.log(response.data.summary, '< response')
         }catch(error){
             console.error(`Error posting data: ${Error}`)
         }
     }
-    const handleSummarize = () => {
+    const handleSummarize = async() => {
 let data = {
-    youtubeUrl: "videoLink"
+    youtubeUrl: videoLink,
+    context: context
 }
         //validateForm
         setIsLoading(true)
-        postSummary(data)
-        setTimeout(()=>{
-            
-            setIsLoading(false)
-        
-        }, 4000)
+        await postSummary(data)
+        setIsLoading(false)
     }
     const handleAccordionChange=()=>{
         setSummaryExpanded(!summaryExpanded)
@@ -67,18 +68,19 @@ let data = {
           fullWidth
           id="outlined-error-helper-text"
           label="Insert your video link here"
-          defaultValue="example.com/my-video"
           helperText="Some helper text"
         />
             </Box>
             <Box marginY={2} >
             <TextField
           id="outlined-multiline-static"
-          label="Multiline"
+          label="Add additional context"
           multiline
           rows={2}
-          defaultValue="Further details on how you would like this summarised"
           fullWidth
+          onChange={(e) => {
+            setContext(e.target.value)
+          }}
         />
             </Box>
             
